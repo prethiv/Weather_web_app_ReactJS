@@ -1,6 +1,9 @@
 import logo from './logo.svg';
 import React from 'react';
 import './App.css';
+import data from './Cities.json';
+
+var weather = require('openweather-apis');
 
 class App extends React.Component{
 
@@ -15,8 +18,24 @@ class App extends React.Component{
         turnlighton:false,
         num4:0,
         marksheet:[[90,90,90,270],[80,80,73,233],[70,70,60,200]],
-        names:['Ajay','Ajith','Prethiv']
+        names:['Ajay','Ajith','Prethiv'],
+        countries:[],
+        cities:[],
+        humidity:"",
+        temp:"",
+        pressure:"",
+        rain:"",
+        url:"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.I-XMqXUBF6jKxrO712-V1QHaI3%26pid%3DApi%26h%3D160&f=1"
       }
+      weather.setLang('en');
+      weather.setCity('Chennai');
+      weather.setUnits('metric');
+      weather.setAPPID('ac390e28b7f4564b9490fee92d000c74');
+      let d=[]
+      for(let i in data){
+        d.push(i)
+      }
+      this.state.countries=d
   }
 
   handleClick=()=>{
@@ -62,6 +81,73 @@ class App extends React.Component{
     this.state.num4=n
   }
 
+  getChennaiWeather=()=>{
+    weather.setCity('Fairplay');
+    weather.getSmartJSON((err,data)=>{
+      if(err){
+          console.log("Error occured while fetching smart json")
+          return
+      }
+      console.log("Smart Data received is ",data)
+      let desc=data.description;
+
+      console.log(desc)
+
+      if(desc==="haze"){
+         // this.setState({url:"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.DyqQBtob7rlJH4_VNtkXNAHaEo%26pid%3DApi&f=1"})
+      }
+
+          })
+
+  }
+
+  renderCity=(event)=>{
+
+    let cou=event.target.value;
+    console.log(cou)
+
+    let ans=[]
+
+    for(let i in data){
+      if (i===cou){
+        ans=data[i]
+      }
+    }
+
+    this.setState({cities:ans})
+
+  }
+
+  displayweather=(event)=>{
+
+    let cityname=event.target.value;
+
+    weather.setCity(cityname);
+    weather.getSmartJSON((err,data)=>{
+      if(err){
+          console.log("Error occured while fetching smart json")
+          return
+      }
+      console.log("Smart Data received is ",data)
+      let desc=data.description;
+
+      this.setState({humidity:data.humidity})
+      this.setState({temp:data.temp})
+      this.setState({pressure:data.pressure})
+      this.setState({rain:data.rain})
+      console.log(desc)
+
+      if(desc==="scattered clouds"){
+        this.setState({url:"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.hEWw4w794ZYjyT50Ry0-dwHaEL%26pid%3DApi%26h%3D160&f=1"})
+         // this.setState({url:"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.DyqQBtob7rlJH4_VNtkXNAHaEo%26pid%3DApi&f=1"})
+      }
+
+
+
+          })
+
+
+  }
 
   render(){
 
@@ -95,6 +181,34 @@ class App extends React.Component{
       </h1>
     ))}
 
+      <button onClick={this.getChennaiWeather}>Check Chennai Weather</button>
+
+<br/><br/>
+      <select onChange={this.renderCity}>
+              {this.state.countries.map(items=>(
+                        <option>{items}</option>
+                    ))}
+                </select>
+                <label>      </label>
+      <select onChange={this.displayweather} >
+
+      {this.state.cities.map(items=>(
+                        <option>{items}</option>
+                    ))}
+      </select>
+
+<br/>
+
+<img src={this.state.url}/>
+
+<li>
+<h1>Humidity {this.state.humidity}</h1>
+<h1>Pressure {this.state.pressure}</h1>
+<h1>Temp {this.state.temp}</h1>
+<h1>Rain {this.state.rain}</h1>
+</li>
+
+<br/>
 
       </div>
 
