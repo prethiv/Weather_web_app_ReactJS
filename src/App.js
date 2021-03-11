@@ -13,7 +13,9 @@ class App extends React.Component{
         num2:0,
         num3:0,
         turnlighton:false,
-        num4:0
+        num4:0,
+        marksheet:[[90,90,90,270],[80,80,73,233],[70,70,60,200]],
+        names:['Ajay','Ajith','Prethiv']
       }
   }
 
@@ -79,8 +81,23 @@ class App extends React.Component{
     <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.DHmU7OCheB8l-N-fv61yZgHaIq%26pid%3DApi%26h%3D160&f=1" />
 }
 
+
 <button onClick={this.turnon}>SWITCH</button>
+    {this.state.names.map(name=>(
+        <h1>{name}</h1>
+    ))}
+
+    {this.state.marksheet.map(student=>(
+      <h1>{
+      student.map(subject=>(
+          <label>{subject+" "}</label>
+      ))}
+      </h1>
+    ))}
+
+
       </div>
+
 
 
 
