@@ -179,17 +179,13 @@ class App extends React.Component {
             "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.hEWw4w794ZYjyT50Ry0-dwHaEL%26pid%3DApi%26h%3D160&f=1",
         });
         // this.setState({url:"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.DyqQBtob7rlJH4_VNtkXNAHaEo%26pid%3DApi&f=1"})
-      }
-      else if(desc==="clear sky"){
-        this.setState({url:tags[1].url})
-      }
-      else if(desc==="overcast clouds"){
-        this.setState({url:tags[2].url})
-      }
-      else if(desc==="light snow"){
-        this.setState({url:tags[3].url})
-      }
-       else {
+      } else if (desc === "clear sky") {
+        this.setState({ url: tags[1].url });
+      } else if (desc === "overcast clouds") {
+        this.setState({ url: tags[2].url });
+      } else if (desc === "light snow") {
+        this.setState({ url: tags[3].url });
+      } else {
         this.setState({ url: tags[4].url });
       }
     });
@@ -254,25 +250,34 @@ class App extends React.Component {
 </div> */}
 
         <div style={{ margin: 75 }} className="bg bg-light">
-          <select
-            onChange={this.renderCity}
-            className="btn btn-warning"
-            style={{ marginLeft: 50, fontFamily: "century gothic" }}
-          >
-            {this.state.countries.map((items) => (
-              <option className="badge badge-light bg-light">{items}</option>
-            ))}
-          </select>
-
-          <select
-            onChange={this.displayweather}
-            className="btn btn-info"
-            style={{ marginLeft: 50, fontFamily: "century gothic" }}
-          >
-            {this.state.cities.map((items) => (
-              <option className="badge badge-light bg-light">{items}</option>
-            ))}
-          </select>
+          <div className="row">
+            <div className="col-*">
+              <select
+                onChange={this.renderCity}
+                className="btn btn-warning"
+                style={{ marginLeft: 50, fontFamily: "century gothic" }}
+              >
+                {this.state.countries.map((items) => (
+                  <option className="badge badge-light bg-light">
+                    {items}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="col-*">
+              <select
+                onChange={this.displayweather}
+                className="btn btn-info"
+                style={{ marginLeft: 50, fontFamily: "century gothic" }}
+              >
+                {this.state.cities.map((items) => (
+                  <option className="badge badge-light bg-light">
+                    {items}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
 
           <br />
           <br />
